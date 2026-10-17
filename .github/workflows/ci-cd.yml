@@ -1,0 +1,61 @@
+name: Docker CI/CD Pipeline - Inventory System
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test Multi-Container (CI)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout mã nguồn từ Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Kiểm tra cú pháp Node.js API (Syntax Check)
+        run: |
+          node --check api/server.js
+          echo "✅ Cú pháp api/server.js hợp lệ!"
+
+      - name: 3. Kiểm tra cấu hình Docker Compose
+        run: |
+          docker compose config -q
+          echo "✅ Cấu hình compose.yaml hợp lệ!"
+
+      - name: 4. Build Docker Images (API & Frontend) và Khởi chạy hệ thống
+        run: |
+          docker compose up --build -d
+          docker ps -a
+
+      - name: 5. Đợi MySQL khởi tạo Database & Kiểm thử tự động API CRUD (Smoke Test)
+        run: |
+          echo "⏳ Đang đợi MySQL 8.0 khởi tạo dữ liệu từ Bind Mount (init.sql)..."
+          for i in {1..30}; do
+            if docker exec inventory_db mysqladmin ping -h localhost -uroot -p123456 --silent; then
+              echo "✅ MySQL đã sẵn sàng!"
+              break
+            fi
+            sleep 2
+          done
+          sleep 5
+
+          echo "🔍 Kiểm tra API GET /api/products..."
+          RESPONSE=$(curl -s http://localhost:3000/api/products)
+          echo "Dữ liệu trả về: $RESPONSE"
+          echo "$RESPONSE" | grep -q "Laptop ASUS"
+
+          echo "➕ Kiểm tra API POST /api/products (Thêm sản phẩm tự động)..."
+          curl -s -X POST http://localhost:3000/api/products \
+            -H "Content-Type: application/json" \
+            -d '{"name":"San pham test CI/CD","quantity":10,"price":99000}' | grep -q "id"
+
+          echo "🎉 Toàn bộ bài test CI/CD đều PASS!"
+
+      - name: 6. Dọn dẹp môi trường sau khi Test
+        if: always()
+        run: |
+          docker compose down -v

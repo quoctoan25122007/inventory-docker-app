@@ -1,0 +1,54 @@
+name: inventory-app
+services:
+  db:
+    image: mysql:8.0
+    container_name: inventory_db
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: inventory_db
+    ports:
+      - "3306:3306"
+    volumes:
+      # 1. Named Volume: Giữ dữ liệu bền vững khi xóa container
+      - db_data:/var/lib/mysql
+      # 2. Bind Mount: Ánh xạ thư mục db-init từ máy ảo Linux vào container
+      - ./db-init:/docker-entrypoint-initdb.d
+    networks:
+      - inventory_net
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: inventory_api
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: "123456"
+      DB_NAME: inventory_db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - inventory_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: inventory_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - inventory_net
+
+networks:
+  inventory_net:
+    driver: bridge
+
+volumes:
+  db_data:
