@@ -28,7 +28,7 @@ CREATE TABLE `products` (
   `quantity` int NOT NULL,
   `price` decimal(15,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Laptop ASUS Vivobook 16 RTX 4050',12,22990000.00),(2,'Máy ảnh Sony Alpha A7S II Body',5,28500000.00),(3,'Gimbal chống rung DJI RS 2 Pro Combo',8,16500000.00),(4,'Bàn phím cơ không dây Keychron K8 Pro',30,2450000.00),(5,'Chuột gaming Logitech G Pro X Superlight',45,2990000.00),(6,'Màn hình đồ họa Dell UltraSharp 27 inch 4K',15,13800000.00),(7,'Ổ cứng SSD Samsung 990 PRO NVMe 1TB',60,2650000.00),(8,'RAM Kingston Fury Beast DDR5 16GB',40,1550000.00),(9,'Tai nghe kiểm âm Audio-Technica ATH-M50x',20,3890000.00),(10,'Thẻ nhớ SD SanDisk Extreme Pro 128GB',100,650000.00),(11,'Vợt cầu lông Yonex Astrox 100ZZ',10,4200000.00),(12,'Bộ lắp ráp LEGO Technic Siêu xe',7,8900000.00),(15,'hoa',1,23.00);
+INSERT INTO `products` VALUES (1,'Laptop ASUS Vivobook 16 RTX 4050',12,22990000.00),(2,'Máy ảnh Sony Alpha A7S II Body',5,28500000.00),(3,'Gimbal chống rung DJI RS 2 Pro Combo',8,16500000.00),(4,'Bàn phím cơ không dây Keychron K8 Pro',30,2450000.00),(5,'Chuột gaming Logitech G Pro X Superlight',45,2990000.00),(6,'Màn hình đồ họa Dell UltraSharp 27 inch 4K',15,13800000.00),(7,'Ổ cứng SSD Samsung 990 PRO NVMe 1TB',60,2650000.00),(8,'RAM Kingston Fury Beast DDR5 16GB',40,1550000.00),(9,'Tai nghe kiểm âm Audio-Technica ATH-M50x',20,3890000.00),(10,'Thẻ nhớ SD SanDisk Extreme Pro 128GB',100,650000.00),(11,'Vợt cầu lông Yonex Astrox 100ZZ',10,4200000.00),(12,'Bộ lắp ráp LEGO Technic Siêu xe',7,8900000.00);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-15 11:52:22
+-- Dump completed on 2026-10-17  7:37:34

@@ -10,12 +10,15 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      # 1. Named Volume: Giữ dữ liệu bền vững khi xóa container
       - db_data:/var/lib/mysql
-      # 2. Bind Mount: Ánh xạ thư mục db-init từ máy ảo Linux vào container
       - ./db-init:/docker-entrypoint-initdb.d
     networks:
       - inventory_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api:
     build:
@@ -30,7 +33,8 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - inventory_net
 
