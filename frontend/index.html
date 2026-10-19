@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hệ thống Quản lý Kho - Dockerized</title>
+  <title>Hệ thống Quản lý Kho</title>
   <style>
     * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
     body { background: #f0f2f5; margin: 0; padding: 15px; color: #1c1e21; }
@@ -96,7 +96,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>📦 Hệ Thống Quản Lý Kho (Docker Compose)</h1>
+      <h1>📦 Hệ Thống Quản Lý Kho</h1>
       <div class="stats" id="totalCount">Tổng: 0 mặt hàng</div>
     </div>
 
@@ -136,7 +136,7 @@
   <script>
     // Tự động dùng /api/products nếu chạy qua Cloudflare/Nginx Proxy, hoặc cổng 3000 nếu mở trực tiếp
     const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:3000/api/products'
+      ? '/api/products'
       : '/api/products';
 
     async function loadProducts() {
